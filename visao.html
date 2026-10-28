@@ -3,165 +3,122 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Laboratório de Visão Artificial</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f5f9;
+  color:#26364b;
 }
-
-body {
-  margin: 0;
-  background: #f3f5f9;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #25364b;
+header{
+  background:#183453;
+  color:#fff;
+  text-align:center;
+  padding:25px 15px;
 }
-
-header {
-  background: #183453;
-  color: white;
-  text-align: center;
-  padding: 24px 15px;
+header h1{margin:0 0 8px;font-size:26px}
+header p{margin:0;color:#dce8f5}
+main{
+  max-width:1200px;
+  margin:24px auto;
+  padding:0 16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
 }
-
-header h1 {
-  margin: 0 0 8px;
-  font-size: 26px;
+.panel{
+  background:#fff;
+  border:1px solid #dce4ed;
+  border-radius:12px;
+  padding:21px;
+  min-width:0;
 }
-
-header p {
-  margin: 0;
-  color: #dbe7f5;
+h2{margin:0 0 17px;font-size:19px}
+label{
+  display:block;
+  font-weight:bold;
+  font-size:14px;
+  margin:15px 0 7px;
 }
-
-main {
-  max-width: 1200px;
-  margin: 24px auto;
-  padding: 0 16px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+input,select{
+  width:100%;
+  padding:12px;
+  border:1px solid #b9c7d8;
+  border-radius:7px;
+  font-size:14px;
+  background:white;
+  color:#26364b;
 }
-
-.panel {
-  background: white;
-  border: 1px solid #dce4ed;
-  border-radius: 12px;
-  padding: 21px;
-  min-width: 0;
+.camera-box{
+  position:relative;
+  margin-top:17px;
+  border-radius:10px;
+  background:#111827;
+  overflow:hidden;
 }
-
-h2 {
-  margin: 0 0 17px;
-  font-size: 19px;
+video{
+  display:block;
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
 }
-
-label {
-  display: block;
-  margin: 15px 0 7px;
-  font-size: 14px;
-  font-weight: bold;
+#countdown{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:100px;
+  font-weight:bold;
+  color:white;
+  text-shadow:0 3px 16px black;
+  pointer-events:none;
 }
-
-input, select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #b9c7d8;
-  border-radius: 7px;
-  background: white;
-  color: #25364b;
-  font-size: 14px;
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin:16px 0;
 }
-
-.camera-box {
-  position: relative;
-  margin-top: 17px;
-  background: #111827;
-  border-radius: 10px;
-  overflow: hidden;
+button{
+  border:0;
+  border-radius:7px;
+  padding:12px 15px;
+  background:#2563eb;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
 }
-
-video {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+button:disabled{opacity:.5;cursor:not-allowed}
+.secondary{background:#53677f}
+#status{
+  font-size:14px;
+  line-height:1.6;
+  color:#51657b;
 }
-
-#countdown {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 100px;
-  font-weight: bold;
-  text-shadow: 0 3px 16px black;
-  pointer-events: none;
+#result{
+  white-space:pre-wrap;
+  background:#f8fafc;
+  border:1px solid #e0e7ef;
+  border-radius:9px;
+  padding:18px;
+  min-height:320px;
+  line-height:1.75;
+  overflow-wrap:anywhere;
 }
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin: 16px 0;
+small{
+  display:block;
+  color:#64748b;
+  line-height:1.5;
+  margin-top:9px;
 }
-
-button {
-  border: 0;
-  border-radius: 7px;
-  padding: 12px 15px;
-  background: #2563eb;
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  filter: brightness(0.95);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.secondary {
-  background: #52667d;
-}
-
-#status {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #51657b;
-}
-
-#result {
-  white-space: pre-wrap;
-  background: #f8fafc;
-  border: 1px solid #e0e7ef;
-  border-radius: 9px;
-  min-height: 320px;
-  padding: 18px;
-  line-height: 1.75;
-  overflow-wrap: anywhere;
-}
-
-small {
-  display: block;
-  margin-top: 9px;
-  color: #64748b;
-  line-height: 1.5;
-}
-
-@media (max-width: 800px) {
-  main {
-    grid-template-columns: 1fr;
-  }
+@media(max-width:800px){
+  main{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -176,11 +133,9 @@ small {
 <main>
 
 <section class="panel">
-
   <h2>1. Webcam e reconhecimento</h2>
 
   <label for="apiKey">Chave da API do Gemini</label>
-
   <input
     id="apiKey"
     type="password"
@@ -189,14 +144,14 @@ small {
   >
 
   <small>
-    A chave não é gravada no código nem no armazenamento
-    do navegador.
+    A chave não é gravada no HTML nem no armazenamento
+    do navegador. Use uma chave de teste com limites
+    de utilização.
   </small>
 
   <label for="cameraSelect">Selecionar câmera</label>
-
   <select id="cameraSelect">
-    <option value="">Clique em detectar câmeras</option>
+    <option value="">Clique em Detectar câmeras</option>
   </select>
 
   <div class="controls">
@@ -205,16 +160,8 @@ small {
   </div>
 
   <div class="camera-box">
-
-    <video
-      id="camera"
-      autoplay
-      playsinline
-      muted
-    ></video>
-
+    <video id="camera" autoplay playsinline muted></video>
     <div id="countdown"></div>
-
   </div>
 
   <canvas
@@ -227,32 +174,24 @@ small {
   <canvas id="photoCanvas" hidden></canvas>
 
   <div class="controls">
-
-    <button id="nextBtn">
-      Reconhecer outro objeto
-    </button>
-
+    <button id="nextBtn">Reconhecer outro objeto</button>
     <button id="stopBtn" class="secondary">
       Desligar webcam
     </button>
-
   </div>
 
   <p id="status">
-    Clique em Detectar câmeras para localizar
-    a webcam do notebook.
+    Detecte as câmeras e selecione a webcam do notebook.
   </p>
 
   <small>
-    O sistema prioriza dispositivos identificados
-    como webcam integrada. Selecione manualmente
-    outra câmera caso necessário.
+    Mostre o objeto e mantenha a imagem estável
+    durante 5 segundos. O reconhecimento começará
+    automaticamente.
   </small>
-
 </section>
 
 <section class="panel">
-
   <h2>2. Identificação e história</h2>
 
   <div id="result">
@@ -260,47 +199,47 @@ small {
   </div>
 
   <div class="controls">
-
-    <button id="repeatBtn">
-      Ouvir novamente
-    </button>
-
+    <button id="repeatBtn">Ouvir novamente</button>
     <button id="stopVoiceBtn" class="secondary">
       Parar narração
     </button>
-
     <button id="audioBtn" class="secondary">
       Áudio ligado
     </button>
-
   </div>
 
   <small>
-    O reconhecimento utiliza o Gemini.
-    A narração utiliza a voz disponível no Windows
-    ou no navegador.
+    A explicação é produzida por inteligência artificial
+    e pode conter imprecisões históricas.
   </small>
-
 </section>
 
 </main>
 
 <script>
+"use strict";
 
-// ======================================
-// CONFIGURAÇÃO DA IA
-// ======================================
+// =====================================
+// MODELOS QUE ACEITAM IMAGENS
+// =====================================
 
-// Modelos são consultados dinamicamente.
-// O sistema tenta escolher um modelo Flash
-// que aceite geração de conteúdo.
+// Não selecionamos qualquer modelo que contenha
+// a palavra "flash". Isso incluía modelos de
+// áudio e outros incompatíveis com nossa tarefa.
+
+const MODELS = [
+  "gemini-3.8-flash",
+  "gemini-3.6-flash",
+  "gemini-3.5-flash-lite",
+  "gemini-3.1-flash-lite"
+];
 
 const API_BASE =
   "https://generativelanguage.googleapis.com/v1beta";
 
-// ======================================
+// =====================================
 // ELEMENTOS
-// ======================================
+// =====================================
 
 const $ = id => document.getElementById(id);
 
@@ -313,9 +252,9 @@ const resultBox = $("result");
 const sampleCanvas = $("sampleCanvas");
 const photoCanvas = $("photoCanvas");
 
-// ======================================
+// =====================================
 // ESTADO
-// ======================================
+// =====================================
 
 let stream = null;
 let detectionTimer = null;
@@ -333,35 +272,33 @@ let lastNarration = "";
 let sessionId = 0;
 let operationId = 0;
 
-let availableCameras = [];
+let selectedCameraId = "";
 
-// ======================================
+// =====================================
 // INTERFACE
-// ======================================
+// =====================================
 
-function setStatus(text) {
-  statusBox.textContent = text;
+function setStatus(message) {
+  statusBox.textContent = message;
 }
 
 function resetDetection() {
-
   previousFrame = null;
   stableStart = null;
   waitingForNewObject = false;
   movementCounter = 0;
-
   countdown.textContent = "";
 
   setStatus(
     stream
-      ? "Mostre um objeto e mantenha-o parado por 5 segundos."
+      ? "Mantenha o objeto parado por 5 segundos."
       : "Ligue a webcam para começar."
   );
 }
 
-// ======================================
+// =====================================
 // NARRAÇÃO
-// ======================================
+// =====================================
 
 function stopSpeaking() {
   if ("speechSynthesis" in window) {
@@ -370,13 +307,13 @@ function stopSpeaking() {
 }
 
 function speak(text) {
-
   if (!audioEnabled || !text) return;
   if (!("speechSynthesis" in window)) return;
 
   stopSpeaking();
 
-  const speech = new SpeechSynthesisUtterance(text);
+  const speech =
+    new SpeechSynthesisUtterance(text);
 
   speech.lang = "pt-BR";
   speech.rate = 0.95;
@@ -387,34 +324,27 @@ function speak(text) {
     voices.find(v => v.lang.toLowerCase() === "pt-br") ||
     voices.find(v => v.lang.toLowerCase().startsWith("pt"));
 
-  if (voice) {
-    speech.voice = voice;
-  }
+  if (voice) speech.voice = voice;
 
   speechSynthesis.speak(speech);
 }
 
-// ======================================
-// PRIORIZAR WEBCAM DO NOTEBOOK
-// ======================================
+// =====================================
+// IDENTIFICAR WEBCAM DO NOTEBOOK
+// =====================================
 
 function cameraScore(camera) {
-
   const name = camera.label.toLowerCase();
-
   let score = 0;
 
-  // Indicações comuns de câmera integrada
   if (/integrated|built.in|internal|webcam|hd camera/.test(name)) {
     score += 100;
   }
 
-  // Alguns notebooks mostram apenas "USB Camera"
-  if (/usb camera|usb video/.test(name)) {
-    score += 20;
+  if (/usb camera|usb video|uvc/.test(name)) {
+    score += 30;
   }
 
-  // Evita preferir câmeras virtuais e de celular
   if (/phone|iphone|android|celular|mobile/.test(name)) {
     score -= 200;
   }
@@ -426,104 +356,86 @@ function cameraScore(camera) {
   return score;
 }
 
-// ======================================
-// DETECTAR CÂMERAS DO WINDOWS
-// ======================================
+// =====================================
+// DETECTAR CÂMERAS
+// =====================================
 
 async function detectCameras() {
-
   if (!navigator.mediaDevices?.enumerateDevices) {
     throw new Error(
-      "Seu navegador não permite listar câmeras."
+      "O navegador não permite listar as câmeras."
     );
   }
-
-  // Primeira permissão: permite obter nomes
-  // dos dispositivos. A câmera temporária
-  // é desligada logo depois.
 
   let temporaryStream = null;
 
   try {
-
     if (!stream) {
-
       temporaryStream =
         await navigator.mediaDevices.getUserMedia({
           video: true,
           audio: false
         });
-
     }
 
     const devices =
       await navigator.mediaDevices.enumerateDevices();
 
-    availableCameras = devices
+    const cameras = devices
       .filter(device => device.kind === "videoinput")
       .map(device => ({
-        deviceId: device.deviceId,
+        id: device.deviceId,
         label: device.label || "Câmera sem nome"
       }));
 
-  } finally {
+    cameras.sort(
+      (a, b) => cameraScore(b) - cameraScore(a)
+    );
 
+    cameraSelect.innerHTML = "";
+
+    if (!cameras.length) {
+      cameraSelect.add(
+        new Option("Nenhuma câmera encontrada", "")
+      );
+      throw new Error("Nenhuma câmera encontrada.");
+    }
+
+    for (const camera of cameras) {
+      cameraSelect.add(
+        new Option(camera.label, camera.id)
+      );
+    }
+
+    const oldCameraStillExists =
+      cameras.some(c => c.id === selectedCameraId);
+
+    cameraSelect.value = oldCameraStillExists
+      ? selectedCameraId
+      : cameras[0].id;
+
+    selectedCameraId = cameraSelect.value;
+
+    setStatus(
+      cameras.length +
+      " câmera(s) detectada(s). Confira a câmera " +
+      "selecionada e clique em Ligar webcam."
+    );
+
+  } finally {
     if (temporaryStream) {
       temporaryStream.getTracks().forEach(
         track => track.stop()
       );
     }
-
   }
-
-  cameraSelect.innerHTML = "";
-
-  if (availableCameras.length === 0) {
-
-    cameraSelect.add(
-      new Option("Nenhuma câmera encontrada", "")
-    );
-
-    setStatus(
-      "O Windows não disponibilizou nenhuma câmera."
-    );
-
-    return;
-  }
-
-  // Ordena pela probabilidade de ser
-  // a webcam integrada do notebook.
-
-  const ordered = [...availableCameras].sort(
-    (a, b) => cameraScore(b) - cameraScore(a)
-  );
-
-  for (const camera of ordered) {
-
-    const option = new Option(
-      camera.label,
-      camera.deviceId
-    );
-
-    cameraSelect.add(option);
-  }
-
-  cameraSelect.value = ordered[0].deviceId;
-
-  setStatus(
-    availableCameras.length +
-    " câmera(s) detectada(s). Selecionada: " +
-    ordered[0].label +
-    ". Confira a lista e clique em Ligar webcam."
-  );
 }
 
-// ======================================
+// =====================================
 // DESLIGAR WEBCAM
-// ======================================
+// =====================================
 
 function stopCamera() {
-
   sessionId++;
   operationId++;
 
@@ -533,81 +445,63 @@ function stopCamera() {
   }
 
   if (stream) {
-
     stream.getTracks().forEach(
       track => track.stop()
     );
-
     stream = null;
   }
 
   video.srcObject = null;
-
   previousFrame = null;
   stableStart = null;
-
   countdown.textContent = "";
 
   stopSpeaking();
 }
 
-// ======================================
-// LIGAR A CÂMERA ESCOLHIDA
-// ======================================
+// =====================================
+// LIGAR WEBCAM SELECIONADA
+// =====================================
 
 async function startCamera() {
-
   const key = $("apiKey").value.trim();
 
   if (!key) {
-    setStatus("Primeiro, informe sua chave do Gemini.");
+    setStatus("Informe sua chave do Gemini.");
     return;
   }
 
   if (!cameraSelect.value) {
-
-    setStatus(
-      "Primeiro, clique em Detectar câmeras."
-    );
-
+    setStatus("Clique primeiro em Detectar câmeras.");
     return;
   }
 
   stopCamera();
 
   const currentOperation = operationId;
-  const selectedDeviceId = cameraSelect.value;
+  const deviceId = cameraSelect.value;
 
   try {
-
     setStatus("Conectando à webcam selecionada...");
 
     const newStream =
       await navigator.mediaDevices.getUserMedia({
-
         video: {
-          deviceId: {
-            exact: selectedDeviceId
-          },
-          width: {
-            ideal: 1280
-          },
-          height: {
-            ideal: 720
-          }
+          deviceId: { exact: deviceId },
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
         },
-
         audio: false
-
       });
 
     if (currentOperation !== operationId) {
-      newStream.getTracks().forEach(t => t.stop());
+      newStream.getTracks().forEach(
+        track => track.stop()
+      );
       return;
     }
 
     stream = newStream;
-
     video.srcObject = stream;
 
     await video.play();
@@ -616,50 +510,40 @@ async function startCamera() {
 
     resetDetection();
 
-    detectionTimer = setInterval(
-      checkFrame,
-      250
-    );
+    detectionTimer = setInterval(checkFrame, 250);
 
   } catch (error) {
-
     setStatus(
-      "Não foi possível abrir a câmera selecionada: " +
-      error.message
+      "Erro ao abrir webcam: " + error.message
     );
-
   }
 }
 
-// ======================================
-// COMPARAR QUADROS DA WEBCAM
-// ======================================
+// =====================================
+// COMPARAÇÃO ENTRE QUADROS
+// =====================================
 
 function frameDifference(a, b) {
-
   if (!b) return 1;
 
   let sum = 0;
-  let n = 0;
+  let count = 0;
 
   for (let i = 0; i < a.length; i += 16) {
-
     sum += Math.abs(a[i] - b[i]);
     sum += Math.abs(a[i + 1] - b[i + 1]);
     sum += Math.abs(a[i + 2] - b[i + 2]);
-
-    n += 3;
+    count += 3;
   }
 
-  return sum / (n * 255);
+  return sum / (count * 255);
 }
 
-// ======================================
-// DETECÇÃO AUTOMÁTICA DE 5 SEGUNDOS
-// ======================================
+// =====================================
+// CONTAGEM AUTOMÁTICA DE 5 SEGUNDOS
+// =====================================
 
 function checkFrame() {
-
   if (!stream || analyzing || video.readyState < 2) {
     return;
   }
@@ -674,15 +558,14 @@ function checkFrame() {
   const pixels =
     ctx.getImageData(0, 0, 64, 48).data;
 
-  const diff =
+  const difference =
     frameDifference(pixels, previousFrame);
 
   previousFrame =
     new Uint8ClampedArray(pixels);
 
   if (waitingForNewObject) {
-
-    if (diff > 0.075) {
+    if (difference > 0.075) {
       movementCounter++;
     } else {
       movementCounter =
@@ -690,7 +573,6 @@ function checkFrame() {
     }
 
     if (movementCounter >= 3) {
-
       waitingForNewObject = false;
       stableStart = null;
       movementCounter = 0;
@@ -699,17 +581,13 @@ function checkFrame() {
         "Mudança detectada. Mantenha o objeto parado."
       );
     }
-
     return;
   }
 
-  if (diff >= 0.035) {
-
+  if (difference >= 0.035) {
     stableStart = null;
     countdown.textContent = "";
-
     setStatus("Aguardando imagem estável...");
-
     return;
   }
 
@@ -727,25 +605,20 @@ function checkFrame() {
     remaining > 0 ? remaining : "";
 
   setStatus(
-    "Reconhecimento em " +
-    remaining +
-    " segundos..."
+    "Reconhecimento em " + remaining + " segundos..."
   );
 
   if (elapsed >= 5) {
-
     stableStart = null;
     analyzeObject();
-
   }
 }
 
-// ======================================
-// CAPTURAR IMAGEM DA WEBCAM
-// ======================================
+// =====================================
+// CAPTURA DA IMAGEM
+// =====================================
 
 function captureImage() {
-
   if (!video.videoWidth || !video.videoHeight) {
     throw new Error(
       "A imagem da webcam ainda não está pronta."
@@ -761,9 +634,7 @@ function captureImage() {
   photoCanvas.height =
     Math.round(video.videoHeight * scale);
 
-  const ctx = photoCanvas.getContext("2d");
-
-  ctx.drawImage(
+  photoCanvas.getContext("2d").drawImage(
     video,
     0,
     0,
@@ -776,154 +647,105 @@ function captureImage() {
     .split(",")[1];
 }
 
-// ======================================
-// BUSCAR MODELOS DISPONÍVEIS
-// ======================================
+// =====================================
+// SOLICITAÇÃO AO GEMINI
+// =====================================
 
-async function getAvailableModels(apiKey) {
+async function callGemini(model, key, image, prompt) {
+  const url =
+    API_BASE + "/models/" +
+    model + ":generateContent";
 
-  const response = await fetch(
-    API_BASE + "/models",
-    {
-      headers: {
-        "x-goog-api-key": apiKey
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-goog-api-key": key
+    },
+    body: JSON.stringify({
+      contents: [{
+        role: "user",
+        parts: [
+          { text: prompt },
+          {
+            inline_data: {
+              mime_type: "image/jpeg",
+              data: image
+            }
+          }
+        ]
+      }],
+      generationConfig: {
+        maxOutputTokens: 1600
       }
-    }
-  );
+    })
+  });
 
-  const data = await response.json();
+  let data;
 
-  if (!response.ok) {
+  try {
+    data = await response.json();
+  } catch {
     throw new Error(
-      data.error?.message ||
-      "Não foi possível consultar os modelos."
+      "O servidor retornou uma resposta inválida."
     );
   }
 
-  return (data.models || [])
-    .filter(model =>
-      model.supportedGenerationMethods?.includes(
-        "generateContent"
-      )
-    )
-    .filter(model =>
-      /flash/i.test(model.name)
-    )
-    .sort((a, b) => {
-
-      // Preferência por modelos Flash não Lite
-      const score = model => {
-
-        const name = model.name.toLowerCase();
-
-        let value = 0;
-
-        if (name.includes("lite")) value -= 10;
-        if (name.includes("preview")) value -= 2;
-
-        const version = name.match(
-          /gemini-(\d+(?:\.\d+)?)/
-        );
-
-        if (version) {
-          value += Number(version[1]) * 10;
-        }
-
-        return value;
-      };
-
-      return score(b) - score(a);
-    });
-}
-
-// ======================================
-// ENVIAR IMAGEM AO GEMINI
-// ======================================
-
-async function callGemini(
-  modelName,
-  apiKey,
-  imageBase64,
-  prompt
-) {
-
-  const url =
-    "https://generativelanguage.googleapis.com/v1beta/" +
-    modelName +
-    ":generateContent";
-
-  const response = await fetch(url, {
-
-    method: "POST",
-
-    headers: {
-      "Content-Type": "application/json",
-      "x-goog-api-key": apiKey
-    },
-
-    body: JSON.stringify({
-
-      contents: [
-        {
-          role: "user",
-
-          parts: [
-            { text: prompt },
-            {
-              inline_data: {
-                mime_type: "image/jpeg",
-                data: imageBase64
-              }
-            }
-          ]
-        }
-      ],
-
-      generationConfig: {
-        maxOutputTokens: 1200
-      }
-
-    })
-
-  });
-
-  const data = await response.json();
-
   if (!response.ok) {
-
     const error = new Error(
       data.error?.message ||
       "Erro HTTP " + response.status
     );
 
     error.status = response.status;
-
     throw error;
   }
 
-  const answer = (
-    data.candidates?.[0]?.content?.parts || []
-  )
-    .filter(part => typeof part.text === "string")
-    .map(part => part.text)
-    .join("\n")
-    .trim();
+  const answer =
+    (data.candidates?.[0]?.content?.parts || [])
+      .filter(part => typeof part.text === "string")
+      .map(part => part.text)
+      .join("\n")
+      .trim();
 
   if (!answer) {
     throw new Error(
-      "O Gemini não retornou texto."
+      "O modelo não retornou uma explicação."
     );
   }
 
   return answer;
 }
 
-// ======================================
-// RECONHECER OBJETO
-// ======================================
+// =====================================
+// ERROS QUE PERMITEM TROCAR MODELO
+// =====================================
+
+function canTryAnotherModel(error) {
+  const message = String(error.message).toLowerCase();
+
+  if (error.status === 404) return true;
+
+  if (
+    message.includes("image input modality") ||
+    message.includes("not available to new users") ||
+    message.includes("high demand") ||
+    message.includes("overloaded") ||
+    message.includes("unavailable")
+  ) {
+    return true;
+  }
+
+  if (error.status === 503) return true;
+
+  return false;
+}
+
+// =====================================
+// RECONHECIMENTO
+// =====================================
 
 async function analyzeObject() {
-
   if (analyzing) return;
 
   analyzing = true;
@@ -931,25 +753,22 @@ async function analyzeObject() {
   const currentSession = sessionId;
 
   countdown.textContent = "";
-
   resultBox.textContent =
-    "Identificando o objeto...";
+    "Identificando o objeto. Aguarde...";
 
   try {
-
-    const apiKey = $("apiKey").value.trim();
-
+    const key = $("apiKey").value.trim();
     const image = captureImage();
 
     const prompt = `
-Analise esta imagem de webcam.
+Observe a fotografia recebida de uma webcam.
 
-Identifique o principal objeto físico.
+Identifique o principal objeto físico mostrado.
 
-Explique em português brasileiro, de forma
-clara e interessante para uma aula.
+Explique em português brasileiro, de forma clara,
+didática e interessante para uma aula.
 
-Organize a resposta assim:
+Use estes títulos:
 
 NOME DO OBJETO
 
@@ -961,69 +780,40 @@ EVOLUÇÃO AO LONGO DO TEMPO
 
 CURIOSIDADE
 
-Use aproximadamente 150 a 200 palavras.
+Escreva aproximadamente 150 a 200 palavras.
 
-Não invente datas, inventores ou modelos.
-Se houver incerteza, informe.
-Se não houver objeto identificável,
-diga claramente.
+Não invente datas, inventores ou marcas.
+Se houver dúvida, informe a incerteza.
+Se não houver objeto reconhecível, diga isso.
 Não identifique pessoas.
-Não utilize Markdown.
+Não use Markdown.
 `;
-
-    setStatus(
-      "Consultando modelos disponíveis do Gemini..."
-    );
-
-    const models = await getAvailableModels(apiKey);
-
-    if (!models.length) {
-      throw new Error(
-        "Nenhum modelo Gemini Flash disponível " +
-        "foi encontrado para esta chave."
-      );
-    }
 
     let answer = null;
     let lastError = null;
 
-    // Tenta até 3 modelos diferentes
-    for (const model of models.slice(0, 3)) {
-
+    for (const model of MODELS) {
       if (currentSession !== sessionId) return;
 
       setStatus(
-        "Analisando com " +
-        model.name.replace("models/", "") +
-        "..."
+        "Analisando imagem com " + model + "..."
       );
 
       try {
-
         answer = await callGemini(
-          model.name,
-          apiKey,
+          model,
+          key,
           image,
           prompt
         );
-
         break;
 
       } catch (error) {
-
         lastError = error;
 
-        // Erros de autenticação e cota
-        // não são resolvidos trocando modelo.
-        if (
-          error.status === 400 ||
-          error.status === 401 ||
-          error.status === 403 ||
-          error.status === 429
-        ) {
+        if (!canTryAnotherModel(error)) {
           throw error;
         }
-
       }
     }
 
@@ -1049,7 +839,6 @@ Não utilize Markdown.
     speak(lastNarration);
 
   } catch (error) {
-
     if (currentSession !== sessionId) return;
 
     resultBox.textContent =
@@ -1057,69 +846,60 @@ Não utilize Markdown.
       error.message;
 
     setStatus(
-      "Falha na análise. Confira a mensagem."
+      "Falha na análise. Confira a mensagem ao lado."
     );
 
   } finally {
-
     analyzing = false;
 
     if (currentSession === sessionId) {
       waitingForNewObject = true;
       movementCounter = 0;
     }
-
   }
 }
 
-// ======================================
+// =====================================
 // BOTÕES
-// ======================================
+// =====================================
 
 $("detectBtn").onclick = async () => {
-
   try {
-
-    setStatus("Detectando câmeras do Windows...");
-
+    setStatus("Detectando câmeras...");
     await detectCameras();
-
   } catch (error) {
-
     setStatus(
-      "Erro ao detectar câmeras: " +
-      error.message
+      "Erro ao detectar câmeras: " + error.message
     );
-
   }
+};
+
+cameraSelect.onchange = () => {
+  selectedCameraId = cameraSelect.value;
+  setStatus(
+    "Câmera selecionada. Clique em Ligar webcam."
+  );
 };
 
 $("startBtn").onclick = startCamera;
 
 $("stopBtn").onclick = () => {
-
   stopCamera();
   setStatus("Webcam desligada.");
-
 };
 
 $("nextBtn").onclick = () => {
-
   stopSpeaking();
   resetDetection();
-
 };
 
 $("repeatBtn").onclick = () => {
-
   speak(lastNarration);
-
 };
 
 $("stopVoiceBtn").onclick = stopSpeaking;
 
 $("audioBtn").onclick = () => {
-
   audioEnabled = !audioEnabled;
 
   $("audioBtn").textContent =
@@ -1127,15 +907,10 @@ $("audioBtn").onclick = () => {
       ? "Áudio ligado"
       : "Áudio desligado";
 
-  if (!audioEnabled) {
-    stopSpeaking();
-  }
+  if (!audioEnabled) stopSpeaking();
 };
 
-window.addEventListener(
-  "pagehide",
-  stopCamera
-);
+window.addEventListener("pagehide", stopCamera);
 
 </script>
 
