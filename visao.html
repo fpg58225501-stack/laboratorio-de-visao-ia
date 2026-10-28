@@ -3,335 +3,972 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Laboratório de Visão Artificial — Gemini</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Laboratório de Visão Artificial - Gemini</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f5f9;color:#243247}
-header{background:#183453;color:white;padding:24px;text-align:center}
-header h1{margin:0 0 8px;font-size:25px}
-header p{margin:0;color:#d9e8f7}
-main{max-width:1150px;margin:24px auto;padding:0 15px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.panel{background:white;border:1px solid #dce3eb;border-radius:12px;padding:20px;min-width:0}
-h2{margin:0 0 16px;font-size:19px}
-label{display:block;margin-bottom:7px;font-weight:bold;font-size:14px}
-input{width:100%;padding:12px;border:1px solid #b9c6d6;border-radius:7px;font-size:14px}
-.camera-box{position:relative;background:#111827;border-radius:9px;overflow:hidden}
-video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
-#count{position:absolute;inset:0;display:grid;place-items:center;font-size:96px;font-weight:bold;color:white;text-shadow:0 3px 15px black;pointer-events:none}
-#count:empty{display:none}
-.controls{display:flex;flex-wrap:wrap;gap:9px;margin:15px 0}
-button{border:0;border-radius:7px;background:#2563eb;color:white;font-weight:bold;padding:12px 15px;cursor:pointer}
-button:disabled{opacity:.5;cursor:not-allowed}
-.secondary{background:#53657a}
-#status{font-size:14px;color:#53657a;line-height:1.5}
-#result{white-space:pre-wrap;line-height:1.75;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:17px;min-height:310px;overflow-wrap:anywhere}
-small{display:block;color:#64748b;line-height:1.5;margin-top:10px}
-@media(max-width:800px){main{grid-template-columns:1fr}}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f3f5f9;
+  color: #26364b;
+}
+
+header {
+  background: #183453;
+  color: white;
+  padding: 25px 15px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 9px;
+  font-size: 26px;
+}
+
+header p {
+  margin: 0;
+  color: #dbe7f5;
+}
+
+main {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #dce4ed;
+  border-radius: 12px;
+  padding: 21px;
+  min-width: 0;
+}
+
+h2 {
+  margin: 0 0 17px;
+  font-size: 19px;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #b9c7d8;
+  border-radius: 7px;
+  font-size: 15px;
+}
+
+.camera-box {
+  position: relative;
+  margin-top: 19px;
+  background: #101827;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+#countdown {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 100px;
+  font-weight: bold;
+  text-shadow: 0 3px 16px black;
+  pointer-events: none;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 16px 0;
+}
+
+button {
+  padding: 12px 15px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(0.94);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.secondary {
+  background: #53677f;
+}
+
+#status {
+  font-size: 14px;
+  color: #51657b;
+  line-height: 1.6;
+}
+
+#result {
+  white-space: pre-wrap;
+  background: #f8fafc;
+  border: 1px solid #e0e7ef;
+  border-radius: 9px;
+  min-height: 320px;
+  padding: 18px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+small {
+  display: block;
+  margin-top: 10px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>Laboratório de Visão Artificial</h1>
-<p>Google Gemini • Reconhecimento de objetos • História narrada</p>
+  <h1>Laboratório de Visão Artificial</h1>
+  <p>
+    Google Gemini 3.8 Flash |
+    Reconhecimento de objetos |
+    História narrada
+  </p>
 </header>
 
 <main>
+
 <section class="panel">
-<h2>1. Câmera e reconhecimento</h2>
 
-<label for="apiKey">Chave da API do Gemini</label>
-<input id="apiKey" type="password" placeholder="Cole sua chave aqui" autocomplete="off">
-<small>A chave permanece na memória desta página. Ela não é salva no HTML nem no armazenamento do navegador.</small>
+  <h2>1. Câmera e reconhecimento</h2>
 
-<div style="height:18px"></div>
+  <label for="apiKey">Chave da API do Gemini</label>
 
-<div class="camera-box">
-<video id="camera" autoplay playsinline muted></video>
-<div id="count"></div>
-</div>
+  <input
+    type="password"
+    id="apiKey"
+    placeholder="Cole sua chave de API aqui"
+    autocomplete="off"
+  >
 
-<canvas id="sample" width="64" height="48" hidden></canvas>
-<canvas id="photo" hidden></canvas>
+  <small>
+    A chave é utilizada apenas durante esta sessão.
+    Ela não fica gravada no código nem no armazenamento
+    do navegador.
+  </small>
 
-<div class="controls">
-<button id="start">Ligar câmera</button>
-<button id="stop" class="secondary">Desligar</button>
-<button id="next" class="secondary">Reconhecer outro objeto</button>
-</div>
+  <div class="camera-box">
 
-<p id="status">Insira a chave e ligue a câmera.</p>
-<small>Mantenha o objeto bem iluminado e relativamente parado por 5 segundos. A análise começará automaticamente.</small>
+    <video
+      id="camera"
+      autoplay
+      playsinline
+      muted
+    ></video>
+
+    <div id="countdown"></div>
+
+  </div>
+
+  <canvas
+    id="sampleCanvas"
+    width="64"
+    height="48"
+    hidden
+  ></canvas>
+
+  <canvas id="photoCanvas" hidden></canvas>
+
+  <div class="controls">
+
+    <button id="startBtn">
+      Ligar câmera
+    </button>
+
+    <button id="stopBtn" class="secondary">
+      Desligar
+    </button>
+
+    <button id="nextBtn" class="secondary">
+      Reconhecer outro objeto
+    </button>
+
+  </div>
+
+  <p id="status">
+    Insira sua chave e ligue a câmera.
+  </p>
+
+  <small>
+    Mostre um objeto à câmera e mantenha a imagem
+    estável por 5 segundos. A análise será iniciada
+    automaticamente.
+  </small>
+
 </section>
 
 <section class="panel">
-<h2>2. Identificação e história</h2>
-<div id="result">Aguardando o reconhecimento de um objeto...</div>
 
-<div class="controls">
-<button id="repeat">Ouvir novamente</button>
-<button id="mute" class="secondary">Parar narração</button>
-<button id="toggleAudio" class="secondary">Áudio ligado</button>
-</div>
-<small>As informações são geradas por IA e podem conter erros históricos. A narração utiliza a voz disponível no navegador.</small>
+  <h2>2. Identificação e história</h2>
+
+  <div id="result">
+    Aguardando o reconhecimento de um objeto...
+  </div>
+
+  <div class="controls">
+
+    <button id="repeatBtn">
+      Ouvir novamente
+    </button>
+
+    <button id="stopVoiceBtn" class="secondary">
+      Parar narração
+    </button>
+
+    <button id="audioBtn" class="secondary">
+      Áudio ligado
+    </button>
+
+  </div>
+
+  <small>
+    As explicações são produzidas por inteligência
+    artificial e podem conter imprecisões históricas.
+    A voz é gerada pelo navegador.
+  </small>
+
 </section>
+
 </main>
 
 <script>
-const $=id=>document.getElementById(id);
-const video=$("camera");
-const statusBox=$("status");
-const count=$("count");
-const result=$("result");
-const sample=$("sample");
-const photo=$("photo");
 
-let stream=null;
-let timer=null;
-let previous=null;
-let stableSince=null;
-let busy=false;
-let waitingNext=false;
-let changeCount=0;
-let audioEnabled=true;
-let lastSpeech="";
+// =============================================
+// CONFIGURAÇÃO DO GEMINI
+// =============================================
 
-function statusText(t){statusBox.textContent=t}
+const GEMINI_MODEL = "gemini-3.8-flash";
 
-function stopSpeaking(){
-  if("speechSynthesis" in window){
-    speechSynthesis.cancel();
+const GEMINI_URL =
+  "https://generativelanguage.googleapis.com/v1beta/models/"
+  + GEMINI_MODEL
+  + ":generateContent";
+
+// =============================================
+// ELEMENTOS DA INTERFACE
+// =============================================
+
+const $ = id => document.getElementById(id);
+
+const video = $("camera");
+const statusBox = $("status");
+const countdown = $("countdown");
+const resultBox = $("result");
+
+const sampleCanvas = $("sampleCanvas");
+const photoCanvas = $("photoCanvas");
+
+// =============================================
+// VARIÁVEIS DE CONTROLE
+// =============================================
+
+let cameraStream = null;
+let detectionTimer = null;
+
+let previousFrame = null;
+let stableStart = null;
+
+let analyzing = false;
+let waitingForNewObject = false;
+
+let movementCounter = 0;
+
+let audioEnabled = true;
+let lastNarration = "";
+
+let cameraSession = 0;
+
+// =============================================
+// FUNÇÕES DE INTERFACE
+// =============================================
+
+function setStatus(message) {
+  statusBox.textContent = message;
+}
+
+function resetDetection() {
+
+  previousFrame = null;
+  stableStart = null;
+
+  waitingForNewObject = false;
+  movementCounter = 0;
+
+  countdown.textContent = "";
+
+  if (cameraStream) {
+    setStatus(
+      "Mostre um objeto e mantenha-o parado por 5 segundos."
+    );
+  } else {
+    setStatus("Ligue a câmera para começar.");
   }
+
 }
 
-function speak(text){
-  if(!audioEnabled || !("speechSynthesis" in window))return;
-  stopSpeaking();
-  const utterance=new SpeechSynthesisUtterance(text);
-  utterance.lang="pt-BR";
-  utterance.rate=0.95;
-  const voices=speechSynthesis.getVoices();
-  const voice=voices.find(v=>v.lang.toLowerCase()==="pt-br")
-    ||voices.find(v=>v.lang.toLowerCase().startsWith("pt"));
-  if(voice)utterance.voice=voice;
-  speechSynthesis.speak(utterance);
+// =============================================
+// NARRAÇÃO EM PORTUGUÊS
+// =============================================
+
+function stopSpeaking() {
+
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+
 }
 
-function resetDetection(){
-  previous=null;
-  stableSince=null;
-  waitingNext=false;
-  changeCount=0;
-  count.textContent="";
-  statusText(stream
-    ?"Mostre o objeto e mantenha-o parado por 5 segundos."
-    :"Ligue a câmera para começar.");
-}
+function speak(text) {
 
-async function startCamera(){
-  if(!$("apiKey").value.trim()){
-    statusText("Primeiro, insira sua chave do Gemini.");
+  if (!audioEnabled || !text) return;
+
+  if (!("speechSynthesis" in window)) {
+    setStatus(
+      "Seu navegador não oferece suporte à narração."
+    );
     return;
   }
+
+  stopSpeaking();
+
+  const speech = new SpeechSynthesisUtterance(text);
+
+  speech.lang = "pt-BR";
+  speech.rate = 0.95;
+  speech.pitch = 1;
+  speech.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+
+  const brazilianVoice = voices.find(
+    voice => voice.lang.toLowerCase() === "pt-br"
+  );
+
+  const portugueseVoice = voices.find(
+    voice => voice.lang.toLowerCase().startsWith("pt")
+  );
+
+  if (brazilianVoice || portugueseVoice) {
+    speech.voice = brazilianVoice || portugueseVoice;
+  }
+
+  window.speechSynthesis.speak(speech);
+
+}
+
+// =============================================
+// INICIAR CÂMERA
+// =============================================
+
+async function startCamera() {
+
+  const apiKey = $("apiKey").value.trim();
+
+  if (!apiKey) {
+    setStatus("Insira primeiro sua chave do Gemini.");
+    return;
+  }
+
   stopCamera();
-  try{
-    if(!navigator.mediaDevices?.getUserMedia){
-      throw new Error("Acesso à câmera indisponível. Use HTTPS.");
+
+  const session = cameraSession;
+
+  try {
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      throw new Error(
+        "A câmera exige HTTPS ou localhost."
+      );
     }
-    stream=await navigator.mediaDevices.getUserMedia({
-      video:{width:{ideal:1280},height:{ideal:720}},
-      audio:false
-    });
-    video.srcObject=stream;
+
+    const stream =
+      await navigator.mediaDevices.getUserMedia({
+        video: {
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+          facingMode: "environment"
+        },
+        audio: false
+      });
+
+    if (session !== cameraSession) {
+      stream.getTracks().forEach(track => track.stop());
+      return;
+    }
+
+    cameraStream = stream;
+
+    video.srcObject = cameraStream;
+
     await video.play();
+
+    if (session !== cameraSession) return;
+
     resetDetection();
-    timer=setInterval(checkFrame,250);
-  }catch(e){
-    statusText("Erro na câmera: "+e.message);
-  }
-}
 
-function stopCamera(){
-  if(timer)clearInterval(timer);
-  timer=null;
-  if(stream)stream.getTracks().forEach(t=>t.stop());
-  stream=null;
-  video.srcObject=null;
-  stableSince=null;
-  count.textContent="";
-  stopSpeaking();
-}
-
-function frameDifference(a,b){
-  if(!b)return 1;
-  let sum=0,n=0;
-  for(let i=0;i<a.length;i+=16){
-    sum+=Math.abs(a[i]-b[i]);
-    sum+=Math.abs(a[i+1]-b[i+1]);
-    sum+=Math.abs(a[i+2]-b[i+2]);
-    n+=3;
-  }
-  return sum/(n*255);
-}
-
-function checkFrame(){
-  if(!stream || busy || video.readyState<2)return;
-
-  const ctx=sample.getContext("2d",{willReadFrequently:true});
-  ctx.drawImage(video,0,0,64,48);
-  const pixels=ctx.getImageData(0,0,64,48).data;
-  const diff=frameDifference(pixels,previous);
-  previous=new Uint8ClampedArray(pixels);
-
-  if(waitingNext){
-    if(diff>0.075)changeCount++;
-    else changeCount=Math.max(0,changeCount-1);
-
-    if(changeCount>=3){
-      waitingNext=false;
-      stableSince=null;
-      changeCount=0;
-      statusText("Mudança detectada. Mantenha o novo objeto parado.");
-    }
-    return;
-  }
-
-  if(diff>=0.035){
-    stableSince=null;
-    count.textContent="";
-    statusText("Aguardando imagem estável...");
-    return;
-  }
-
-  if(stableSince===null)stableSince=Date.now();
-  const elapsed=(Date.now()-stableSince)/1000;
-  const remaining=Math.max(0,Math.ceil(5-elapsed));
-
-  count.textContent=remaining>0?remaining:"";
-  statusText("Análise automática em "+remaining+" segundos.");
-
-  if(elapsed>=5){
-    stableSince=null;
-    analyzeObject();
-  }
-}
-
-async function analyzeObject(){
-  if(busy)return;
-  busy=true;
-  count.textContent="";
-  statusText("Gemini analisando a imagem...");
-  result.textContent="Identificando o objeto. Aguarde...";
-
-  try{
-    const key=$("apiKey").value.trim();
-    if(!key)throw new Error("Chave da API não informada.");
-
-    const maxWidth=1024;
-    const scale=Math.min(1,maxWidth/video.videoWidth);
-    photo.width=Math.round(video.videoWidth*scale);
-    photo.height=Math.round(video.videoHeight*scale);
-    photo.getContext("2d").drawImage(
-      video,0,0,photo.width,photo.height
+    detectionTimer = setInterval(
+      checkCameraFrame,
+      250
     );
 
-    const base64=photo.toDataURL("image/jpeg",0.82).split(",")[1];
+  } catch (error) {
 
-    const prompt=`
-Você é um professor de História da Ciência e Tecnologia.
-Analise a imagem da câmera e identifique o objeto principal.
+    setStatus(
+      "Não foi possível ligar a câmera: "
+      + error.message
+    );
 
-Responda em português brasileiro com aproximadamente
-130 a 200 palavras, em linguagem clara e interessante.
+  }
 
-Organize a resposta em:
+}
+
+// =============================================
+// DESLIGAR CÂMERA
+// =============================================
+
+function stopCamera() {
+
+  cameraSession++;
+
+  if (detectionTimer) {
+    clearInterval(detectionTimer);
+    detectionTimer = null;
+  }
+
+  if (cameraStream) {
+
+    cameraStream.getTracks().forEach(
+      track => track.stop()
+    );
+
+    cameraStream = null;
+  }
+
+  video.srcObject = null;
+
+  previousFrame = null;
+  stableStart = null;
+
+  countdown.textContent = "";
+
+  stopSpeaking();
+
+}
+
+// =============================================
+// COMPARAÇÃO ENTRE QUADROS
+// =============================================
+
+function frameDifference(current, previous) {
+
+  if (!previous) return 1;
+
+  let totalDifference = 0;
+  let comparisons = 0;
+
+  for (let i = 0; i < current.length; i += 16) {
+
+    totalDifference +=
+      Math.abs(current[i] - previous[i]);
+
+    totalDifference +=
+      Math.abs(current[i + 1] - previous[i + 1]);
+
+    totalDifference +=
+      Math.abs(current[i + 2] - previous[i + 2]);
+
+    comparisons += 3;
+
+  }
+
+  return totalDifference / (comparisons * 255);
+
+}
+
+// =============================================
+// DETECÇÃO DE ESTABILIDADE - 5 SEGUNDOS
+// =============================================
+
+function checkCameraFrame() {
+
+  if (
+    !cameraStream ||
+    analyzing ||
+    video.readyState < 2
+  ) {
+    return;
+  }
+
+  const context = sampleCanvas.getContext(
+    "2d",
+    { willReadFrequently: true }
+  );
+
+  context.drawImage(
+    video,
+    0,
+    0,
+    sampleCanvas.width,
+    sampleCanvas.height
+  );
+
+  const currentFrame = context.getImageData(
+    0,
+    0,
+    sampleCanvas.width,
+    sampleCanvas.height
+  ).data;
+
+  const difference = frameDifference(
+    currentFrame,
+    previousFrame
+  );
+
+  previousFrame = new Uint8ClampedArray(
+    currentFrame
+  );
+
+  // Aguarda mudança visual após reconhecimento
+
+  if (waitingForNewObject) {
+
+    if (difference > 0.075) {
+      movementCounter++;
+    } else {
+      movementCounter = Math.max(
+        0,
+        movementCounter - 1
+      );
+    }
+
+    if (movementCounter >= 3) {
+
+      waitingForNewObject = false;
+      stableStart = null;
+      movementCounter = 0;
+
+      setStatus(
+        "Mudança detectada. Mantenha o objeto parado."
+      );
+
+    }
+
+    return;
+  }
+
+  // Se houver movimento, reinicia a contagem
+
+  if (difference >= 0.035) {
+
+    stableStart = null;
+    countdown.textContent = "";
+
+    setStatus("Aguardando imagem estável...");
+
+    return;
+  }
+
+  // Começa a contar quando a imagem estabiliza
+
+  if (stableStart === null) {
+    stableStart = Date.now();
+  }
+
+  const elapsed =
+    (Date.now() - stableStart) / 1000;
+
+  const remaining = Math.max(
+    0,
+    Math.ceil(5 - elapsed)
+  );
+
+  countdown.textContent =
+    remaining > 0 ? remaining : "";
+
+  setStatus(
+    "Reconhecimento em "
+    + remaining
+    + " segundos..."
+  );
+
+  if (elapsed >= 5) {
+
+    stableStart = null;
+
+    analyzeObject();
+
+  }
+
+}
+
+// =============================================
+// FOTOGRAFAR O QUADRO ATUAL
+// =============================================
+
+function captureImage() {
+
+  if (!video.videoWidth || !video.videoHeight) {
+    throw new Error("A câmera ainda não está pronta.");
+  }
+
+  const maxWidth = 1024;
+
+  const scale = Math.min(
+    1,
+    maxWidth / video.videoWidth
+  );
+
+  photoCanvas.width = Math.round(
+    video.videoWidth * scale
+  );
+
+  photoCanvas.height = Math.round(
+    video.videoHeight * scale
+  );
+
+  const context = photoCanvas.getContext("2d");
+
+  context.drawImage(
+    video,
+    0,
+    0,
+    photoCanvas.width,
+    photoCanvas.height
+  );
+
+  const imageData = photoCanvas.toDataURL(
+    "image/jpeg",
+    0.82
+  );
+
+  return imageData.split(",")[1];
+
+}
+
+// =============================================
+// CONSULTA À API DO GEMINI
+// =============================================
+
+async function analyzeObject() {
+
+  if (analyzing) return;
+
+  analyzing = true;
+
+  const session = cameraSession;
+
+  countdown.textContent = "";
+
+  setStatus(
+    "Imagem capturada. Gemini analisando o objeto..."
+  );
+
+  resultBox.textContent =
+    "Identificando o objeto e pesquisando seu contexto histórico no conhecimento do modelo...";
+
+  try {
+
+    const apiKey = $("apiKey").value.trim();
+
+    if (!apiKey) {
+      throw new Error(
+        "A chave da API não foi informada."
+      );
+    }
+
+    const base64Image = captureImage();
+
+    const prompt = `
+Você é um professor de História da Ciência e
+da Tecnologia.
+
+Observe cuidadosamente a imagem recebida
+e identifique o principal objeto físico.
+
+Explique em português brasileiro, com linguagem
+clara e interessante, adequada a uma demonstração
+em sala de aula.
+
+Organize a resposta com os seguintes títulos:
+
 NOME DO OBJETO
+
 O QUE É E PARA QUE SERVE
+
 ORIGEM E HISTÓRIA
+
 EVOLUÇÃO AO LONGO DO TEMPO
+
 CURIOSIDADE
 
-Não invente inventores, datas, marcas ou modelos.
-Se não tiver certeza, diga claramente.
-Se houver apenas uma categoria reconhecível,
-conte a história da categoria e não de um modelo específico.
-Se não houver objeto identificável, informe isso.
-Não identifique pessoas na imagem.
+A explicação deve ter aproximadamente
+150 a 220 palavras.
+
+Regras:
+- Identifique o objeto com cautela.
+- Não invente datas ou nomes de inventores.
+- Se não reconhecer o modelo exato,
+  explique a categoria geral.
+- Se houver dúvida, informe a incerteza.
+- Não identifique pessoas.
+- Se não houver um objeto identificável,
+  diga que não foi possível identificá-lo.
+- Não use formatação Markdown.
 `;
 
-    const response=await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-      {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "x-goog-api-key":key
-        },
-        body:JSON.stringify({
-          contents:[{
-            role:"user",
-            parts:[
-              {text:prompt},
-              {inline_data:{mime_type:"image/jpeg",data:base64}}
-            ]
-          }],
-          generationConfig:{temperature:0.3}
-        })
+    const requestBody = {
+
+      contents: [
+        {
+          role: "user",
+
+          parts: [
+            {
+              text: prompt
+            },
+            {
+              inline_data: {
+                mime_type: "image/jpeg",
+                data: base64Image
+              }
+            }
+          ]
+        }
+      ],
+
+      generationConfig: {
+        maxOutputTokens: 1200
       }
-    );
 
-    const data=await response.json();
+    };
 
-    if(!response.ok){
-      throw new Error(data.error?.message
-        ||"Erro HTTP "+response.status);
+    const response = await fetch(GEMINI_URL, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey
+      },
+
+      body: JSON.stringify(requestBody)
+
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      const serverMessage =
+        data.error?.message ||
+        "Erro HTTP " + response.status;
+
+      if (response.status === 400) {
+        throw new Error(
+          "Requisição recusada pelo Gemini: "
+          + serverMessage
+        );
+      }
+
+      if (response.status === 403) {
+        throw new Error(
+          "Acesso negado. Confira sua chave de API "
+          + "e as permissões do projeto. "
+          + serverMessage
+        );
+      }
+
+      if (response.status === 429) {
+        throw new Error(
+          "Limite de requisições atingido. "
+          + "Verifique sua cota no Google AI Studio. "
+          + serverMessage
+        );
+      }
+
+      throw new Error(serverMessage);
+
     }
 
-    const text=(data.candidates?.[0]?.content?.parts||[])
-      .filter(part=>typeof part.text==="string")
-      .map(part=>part.text)
-      .join("\n").trim();
-
-    if(!text)throw new Error("O Gemini não retornou texto.");
-
-    result.textContent=text;
-    lastSpeech=text
-      .replace(/[*#_`]/g,"")
-      .replace(/\n+/g,". ")
-      .replace(/\s+/g," ")
+    const answer = (
+      data.candidates?.[0]?.content?.parts || []
+    )
+      .filter(part => typeof part.text === "string")
+      .map(part => part.text)
+      .join("\n")
       .trim();
 
-    statusText("Análise concluída. História em áudio.");
-    speak(lastSpeech);
+    if (!answer) {
 
-  }catch(e){
-    result.textContent="Não foi possível analisar o objeto.\n\n"+e.message;
-    statusText("Falha na análise. Confira a chave e a conexão.");
-  }finally{
-    busy=false;
-    waitingNext=true;
-    changeCount=0;
+      throw new Error(
+        "O Gemini não retornou uma explicação."
+      );
+
+    }
+
+    // Não exibir resultado de câmera já desligada
+
+    if (session !== cameraSession) return;
+
+    resultBox.textContent = answer;
+
+    lastNarration = answer
+      .replace(/[*#_`]/g, "")
+      .replace(/\n+/g, ". ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    setStatus(
+      "Objeto analisado com sucesso. "
+      + "Iniciando a narração."
+    );
+
+    speak(lastNarration);
+
+  } catch (error) {
+
+    if (session !== cameraSession) return;
+
+    resultBox.textContent =
+      "Não foi possível analisar o objeto.\n\n"
+      + error.message;
+
+    setStatus(
+      "Falha na análise. Verifique a mensagem "
+      + "ao lado e tente novamente."
+    );
+
+  } finally {
+
+    analyzing = false;
+
+    if (session === cameraSession) {
+      waitingForNewObject = true;
+      movementCounter = 0;
+    }
+
   }
+
 }
 
-$("start").onclick=startCamera;
-$("stop").onclick=()=>{
-  stopCamera();
-  statusText("Câmera desligada.");
-};
-$("next").onclick=()=>{
-  stopSpeaking();
-  resetDetection();
-};
-$("repeat").onclick=()=>speak(lastSpeech);
-$("mute").onclick=stopSpeaking;
-$("toggleAudio").onclick=()=>{
-  audioEnabled=!audioEnabled;
-  $("toggleAudio").textContent=audioEnabled
-    ?"Áudio ligado":"Áudio desligado";
-  if(!audioEnabled)stopSpeaking();
-};
-window.addEventListener("pagehide",stopCamera);
+// =============================================
+// BOTÕES
+// =============================================
+
+$("startBtn").addEventListener(
+  "click",
+  startCamera
+);
+
+$("stopBtn").addEventListener(
+  "click",
+  () => {
+
+    stopCamera();
+
+    setStatus("Câmera desligada.");
+
+  }
+);
+
+$("nextBtn").addEventListener(
+  "click",
+  () => {
+
+    stopSpeaking();
+
+    resetDetection();
+
+  }
+);
+
+$("repeatBtn").addEventListener(
+  "click",
+  () => {
+
+    speak(lastNarration);
+
+  }
+);
+
+$("stopVoiceBtn").addEventListener(
+  "click",
+  stopSpeaking
+);
+
+$("audioBtn").addEventListener(
+  "click",
+  () => {
+
+    audioEnabled = !audioEnabled;
+
+    $("audioBtn").textContent =
+      audioEnabled
+        ? "Áudio ligado"
+        : "Áudio desligado";
+
+    if (!audioEnabled) {
+      stopSpeaking();
+    }
+
+  }
+);
+
+window.addEventListener(
+  "pagehide",
+  stopCamera
+);
+
 </script>
+
 </body>
 </html>
